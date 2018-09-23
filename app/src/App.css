@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  display: block;
 }
 
 .App-logo {
@@ -20,6 +20,18 @@
 
 .App-intro {
   font-size: large;
+}
+
+.city-list {
+  display: inline-block;
+  vertical-align: top;
+  width: 49%;
+}
+
+.selected-city-info {
+  display: inline-block;
+  vertical-align: top;
+  width: 49%;
 }
 
 @keyframes App-logo-spin {
