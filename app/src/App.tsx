@@ -5,8 +5,9 @@ import {
     fetchCityById,
     fetchBestCity
 } from "./actions";
-import {AppProps, City} from "./types";
+import { AppProps, City } from "./types";
 import './App.css';
+import {Citylist} from "./components/citylist";
 
 interface MapStateToPropsI {
     cities: Array<City>,
@@ -37,17 +38,12 @@ class App extends React.Component<AppProps> {
             fetchBestCity
         } = this.props;
 
+
         return (
             <div className="App">
-                <div className="city-list">
-                    <div>Cities list:</div>
-                    {cities ? cities.map(cityData =>
-                        <div className="city" onClick={() => fetchCityById(cityData.id)}
-                             key={cityData.id}>{cityData.name}</div>
-                    ) : 'Loading city list'}
-                </div>
+                <Citylist selectHandler={fetchCityById} cities={cities} cityMain={cityMain}/>
+
                 <div className="selected-city-info">
-                    {cityMain && <div>Temperature of selected city:{cityMain.temp}</div>}
                     <button onClick={fetchBestCity.bind(this, cities)}>Get city with best temperature</button>
                     {
                         loading && <div>

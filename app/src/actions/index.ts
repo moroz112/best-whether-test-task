@@ -7,30 +7,19 @@ import {
     FETCH_BEST_CITY_SUCCESS,
     FETCH_BEST_CITY_FAILURE
 } from '../actionTypes';
-import {fetchCities} from "../api";
-import { APPID, BEST_TEMP_VALUE } from "../types";
+import { fetchCities, fetchCity } from "../api";
 
 
-export const fetchCityById = (cityId) => dispatch => {
-    dispatch({type: FETCH_CITY_START, payload: {cityId}});
+export const fetchCityById = (cityName) => dispatch => {
+    dispatch({type: FETCH_CITY_START, payload: {cityName}});
 };
 
 export const fetchBestCity = (cities) => async dispatch => {
     dispatch({type: FETCH_BEST_CITY_START});
 
     try {
-        let bestCityTempValue = 3000;
-        let bestCity = {};
+        let bestCity = await fetchCity(cities);
 
-        for (let i = 0; i < cities.length; i++) {
-            let cityData = await fetch(`http://api.openweathermap.org/data/2.5/weather?id=${cities[i].id}${APPID}`);
-            let cityDataJson = await cityData.json();
-
-            if (Math.abs(cityDataJson.main.temp - BEST_TEMP_VALUE) < bestCityTempValue) {
-                bestCityTempValue = cityDataJson.main.temp;
-                bestCity = cityDataJson;
-            }
-        }
         dispatch({type: FETCH_BEST_CITY_SUCCESS, payload: bestCity})
     } catch (e) {
         dispatch({

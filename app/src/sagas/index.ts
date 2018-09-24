@@ -8,11 +8,11 @@ import {
 
 function* fetchUser(action) {
     try {
-        const city = yield call((cityId) => {
-            return fetch(`http://api.openweathermap.org/data/2.5/weather?id=${cityId}${APPID}`).then(function(result) {
+        const city = yield call((cityName) => {
+            return fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}${APPID}`).then(function(result) {
                 return result.json()
             })
-        }, action.payload.cityId);
+        }, action.payload.cityName);
 
         yield put({type: FETCH_CITY_SUCCESS, city: city});
     } catch (e) {
